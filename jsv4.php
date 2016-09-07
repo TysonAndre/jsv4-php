@@ -32,12 +32,12 @@ class Jsv4 {
 	static public function validate($data, $schema) {
 		return new Jsv4($data, $schema);
 	}
-	
+
 	static public function isValid($data, $schema) {
 		$result = new Jsv4($data, $schema, TRUE);
 		return $result->valid;
 	}
-	
+
 	static public function coerce($data, $schema) {
 		if (is_object($data) || is_array($data)) {
 			$data = unserialize(serialize($data));
@@ -48,7 +48,7 @@ class Jsv4 {
 		}
 		return $result;
 	}
-	
+
 	static public function pointerJoin($parts) {
 		$result = "";
 		foreach ($parts as $part) {
@@ -58,7 +58,7 @@ class Jsv4 {
 		}
 		return $result;
 	}
-	
+
 	static public function recursiveEqual($a, $b) {
 		if (is_object($a)) {
 			if (!is_object($b)) {
@@ -101,7 +101,7 @@ class Jsv4 {
 		return $a === $b;
 	}
 
-	
+
 	private $data;
 	private $schema;
 	private $firstErrorOnly;
@@ -128,7 +128,7 @@ class Jsv4 {
 		} catch (Jsv4Error $e) {
 		}
 	}
-	
+
 	private function fail($code, $dataPath, $schemaPath, $errorMessage, $subErrors=NULL) {
 		$this->valid = FALSE;
 		$error = new Jsv4Error($code, $dataPath, $schemaPath, $errorMessage, $subErrors);
@@ -137,11 +137,11 @@ class Jsv4 {
 			throw $error;
 		}
 	}
-	
+
 	private function subResult(&$data, $schema, $allowCoercion=TRUE) {
 		return new Jsv4($data, $schema, $this->firstErrorOnly, $allowCoercion && $this->coerce);
 	}
-	
+
 	private function includeSubResult($subResult, $dataPrefix, $schemaPrefix) {
 		if (!$subResult->valid) {
 			$this->valid = FALSE;
@@ -150,8 +150,11 @@ class Jsv4 {
 			}
 		}
 	}
-	
+
 	private function checkTypes() {
+		if (empty($this->schema->required) && is_null($this->data)) {
+			return;
+		}
 		if (isset($this->schema->type)) {
 			$types = $this->schema->type;
 			if (!is_array($types)) {
@@ -228,7 +231,7 @@ class Jsv4 {
 			$this->fail(JSV4_INVALID_TYPE, "", "/type", "Invalid type: $type");
 		}
 	}
-	
+
 	private function checkEnum() {
 		if (isset($this->schema->enum)) {
 			foreach ($this->schema->enum as $option) {
@@ -239,7 +242,7 @@ class Jsv4 {
 			$this->fail(JSV4_ENUM_MISMATCH, "", "/enum", "Value must be one of the enum options");
 		}
 	}
-	
+
 	private function checkObject() {
 		if (!is_object($this->data)) {
 			return;
@@ -321,7 +324,7 @@ class Jsv4 {
 			}
 		}
 	}
-	
+
 	private function checkArray() {
 		if (!is_array($this->data)) {
 			return;
@@ -379,7 +382,7 @@ class Jsv4 {
 			}
 		}
 	}
-	
+
 	private function checkString() {
 		if (!is_string($this->data)) {
 			return;
@@ -438,7 +441,7 @@ class Jsv4 {
 			}
 		}
 	}
-	
+
 	private function checkComposite() {
 		if (isset($this->schema->allOf)) {
 			foreach ($this->schema->allOf as $index => $subSchema) {
@@ -483,7 +486,7 @@ class Jsv4 {
 			}
 		}
 	}
-	
+
 	private function createValueForProperty($key) {
 		$schema = NULL;
 		if (isset($this->schema->properties->$key)) {
@@ -544,7 +547,7 @@ class Jsv4Error extends Exception {
 			$this->subResults = $subResults;
 		}
 	}
-	
+
 	public function prefix($dataPrefix, $schemaPrefix) {
 		return new Jsv4Error($this->code, $dataPrefix.$this->dataPath, $schemaPrefix.$this->schemaPath, $this->message);
 	}
