@@ -234,6 +234,9 @@ class Jsv4 {
 
 	private function checkEnum() {
 		if (isset($this->schema->enum)) {
+		    if (empty($this->schema->required) && is_null($this->data)) {
+		        return;
+		    }
 			foreach ($this->schema->enum as $option) {
 				if (self::recursiveEqual($this->data, $option)) {
 					return;
