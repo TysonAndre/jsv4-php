@@ -2,6 +2,8 @@
 
 ## A (coercive) JSON Schema v4 Validator for PHP
 
+[![Build Status](https://travis-ci.org/TysonAndre/jsv4-php.svg?branch=master)](https://travis-ci.org/TysonAndre/jsv4-php)
+
 `jsv4-php` is a data validator, using version 4 JSON Schemas.
 
 Just include `jsv4.php` from your code, and use the static methods on the `Jsv4` class it defines.
