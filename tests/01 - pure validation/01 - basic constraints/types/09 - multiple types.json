@@ -10,8 +10,8 @@
 	},
 	{
 		"method": "validate",
-		"title": "Array fails null",
-		"schema": {"type": ["array"]},
+		"title": "Array fails null (required)",
+		"schema": {"type": ["array"], "required": true},
 		"data": null,
 		"result": {
 			"/valid": false,
@@ -19,6 +19,15 @@
 			"/errors/0/dataPath": "",
 			"/errors/0/schemaPath": "/type",
 			"/errors/0/message": "Invalid type: null"
+		}
+	},
+	{
+		"method": "validate",
+		"title": "Array passes null (optional)",
+		"schema": {"type": ["array"]},
+		"data": null,
+		"result": {
+			"/valid": true
 		}
 	},
 	{
@@ -41,8 +50,8 @@
 	},
 	{
 		"method": "validate",
-		"title": "Object/boolean fails null",
-		"schema": {"type": ["object", "boolean"]},
+		"title": "Object/boolean fails null (required)",
+		"schema": {"type": ["object", "boolean"], "required": true},
 		"data": null,
 		"result": {
 			"/valid": false,
@@ -50,6 +59,15 @@
 			"/errors/0/dataPath": "",
 			"/errors/0/schemaPath": "/type",
 			"/errors/0/message": "Invalid type: null"
+		}
+	},
+	{
+		"method": "validate",
+		"title": "Object/boolean fails null",
+		"schema": {"type": ["object", "boolean"]},
+		"data": null,
+		"result": {
+			"/valid": true
 		}
 	}
 ]

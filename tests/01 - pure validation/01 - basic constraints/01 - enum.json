@@ -12,6 +12,33 @@
 	},
 	{
 		"method": "validate",
+		"title": "Enum fails (null comparison, required)",
+		"schema": {
+			"enum": ["one", "two", "three"],
+            "required": true
+		},
+		"data": null,
+		"result": {
+			"/valid": false,
+			"/errors/0/code": 1,
+			"/errors/0/dataPath": "",
+			"/errors/0/schemaPath": "/enum",
+			"/errors/0/message": "Value must be one of the enum options"
+		}
+	},
+	{
+		"method": "validate",
+		"title": "Enum passes (null comparison, optional)",
+		"schema": {
+			"enum": ["one", "two", "three"]
+		},
+		"data": null,
+		"result": {
+			"/valid": true
+		}
+	},
+	{
+		"method": "validate",
 		"title": "Enum passes (object comparison)",
 		"schema": {
 			"enum": [{"one": 1}, {"two": 2}, {"three": 3}]

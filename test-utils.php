@@ -56,7 +56,7 @@ function pointerGet(&$value, $path="", $strict=FALSE) {
 		if (is_array($value) && is_numeric($part)) {
 			$value =& $value[$part];
 		} else if (is_object($value)) {
-			if (isset($value->$part)) {
+			if (property_exists($value, $part)) {
 				$value =& $value->$part;
 			} else if ($strict) {
 				throw new Exception("Path does not exist: $path");

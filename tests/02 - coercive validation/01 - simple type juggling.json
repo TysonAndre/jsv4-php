@@ -59,12 +59,22 @@
 	},
 	{
 		"method": "coerce",
-		"title": "Null -> string",
-		"schema": {"type": "string"},
+		"title": "Null -> string (required)",
+		"schema": {"type": "string", "required": true},
 		"data": null,
 		"result": {
 			"/valid": true,
 			"/value": ""
+		}
+	},
+	{
+		"method": "coerce",
+		"title": "Null -> string (optional)",
+		"schema": {"type": "string"},
+		"data": null,
+		"result": {
+			"/valid": true,
+			"/value": null
 		}
 	},
 	{
@@ -123,7 +133,7 @@
 		"method": "coerce",
 		"title": "Coerce to boolean (false)",
 		"schema": {
-			"items": {"type": "boolean"}
+			"items": {"type": "boolean", "required": true}
 		},
 		"data": [0, "0", "false", "no", null],
 		"result": {

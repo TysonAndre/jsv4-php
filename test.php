@@ -13,7 +13,7 @@ function runJsonTest($key, $test) {
 	global $totalTestCount;
 	global $failedTests;
 	$totalTestCount++;
-	
+
 	try {
 		if ($test->method == "validate") {
 			$result = Jsv4::validate($test->data, $test->schema);
@@ -47,7 +47,7 @@ function runPhpTest($key, $filename) {
 	global $totalTestCount;
 	global $failedTests;
 	$totalTestCount++;
-	
+
 	try {
 		include_once $filename;
 	} catch (Exception $e) {
@@ -62,17 +62,17 @@ function runTests($directory, $indent="") {
 		$directory .= "/";
 	}
 	$baseName = basename($directory);
-	
+
 	$testCount = 0;
 	$testFileCount = 0;
-	
+
 	$entries = scandir($directory);
 	foreach ($entries as $entry) {
 		$filename = $directory.$entry;
-		if (stripos($entry, '.php') && is_file($filename)) {
+		if (preg_match('/\.php$/i', $entry) && is_file($filename)) {
 			$key = substr($filename, 0, strlen($filename) - 4);
 			runPhpTest($key, $filename);
-		} else if (stripos($entry, '.json') && is_file($filename)) {
+		} else if (preg_match('/\.json$/i', $entry) && is_file($filename)) {
 			$testFileCount++;
 			$tests = json_decode(file_get_contents($filename));
 			if ($tests == NULL) {

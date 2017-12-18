@@ -30,7 +30,7 @@ class SchemaStore {
 		}
 		return $value;
 	}
-	
+
 	private static function isNumericArray($array) {
 		$count = count($array);
 		for ($i = 0; $i < $count; $i++) {
@@ -40,7 +40,7 @@ class SchemaStore {
 		}
 		return TRUE;
 	}
-	
+
 	private static function resolveUrl($base, $relative) {
 		if (parse_url($relative, PHP_URL_SCHEME) != '') {
 			// It's already absolute
@@ -80,7 +80,7 @@ class SchemaStore {
 				$baseParts['path'] = "/".$baseParts['path'];
 			}
 		}
-		
+
 		$result = "";
 		if (isset($baseParts['scheme'])) {
 			$result .= $baseParts['scheme']."://";
@@ -108,11 +108,11 @@ class SchemaStore {
 
 	private $schemas = array();
 	private $refs = array();
-	
+
 	public function missing() {
 		return array_keys($this->refs);
 	}
-	
+
 	public function add($url, $schema, $trusted=FALSE) {
 		$urlParts = explode("#", $url);
 		$baseUrl = array_shift($urlParts);
@@ -133,12 +133,12 @@ class SchemaStore {
 				}
 				unset($this->refs[$baseUrl][$fullUrl]);
 			}
-			if (count($this->refs[$baseUrl]) == 0) {
+			if (!isset($this->refs[$baseUrl]) || count($this->refs[$baseUrl]) == 0) {
 				unset($this->refs[$baseUrl]);
 			}
 		}
 	}
-	
+
 	private function normalizeSchema($url, &$schema, $trustPrefix = '') {
 		if (is_array($schema) && !self::isNumericArray($schema)) {
 			$schema = (object)$schema;
@@ -173,7 +173,7 @@ class SchemaStore {
 			}
 		}
 	}
-	
+
 	public function get($url) {
 		if (isset($this->schemas[$url])) {
 			return $this->schemas[$url];

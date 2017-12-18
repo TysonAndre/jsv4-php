@@ -70,7 +70,25 @@
 	},
 	{
 		"method": "validate",
-		"title": "Property type-check fails for null",
+		"title": "Property type-check fails for null (required)",
+		"schema": {
+			"properties": {
+				"foo": {
+					"type": "string",
+					"required": true
+				}
+			}
+		},
+		"data": {
+			"foo": null
+		},
+		"result": {
+			"/valid": false
+		}
+	},
+	{
+		"method": "validate",
+		"title": "Property type-check passes for null",
 		"schema": {
 			"properties": {
 				"foo": {
@@ -82,7 +100,7 @@
 			"foo": null
 		},
 		"result": {
-			"/valid": false
+			"/valid": true
 		}
 	}
 ]

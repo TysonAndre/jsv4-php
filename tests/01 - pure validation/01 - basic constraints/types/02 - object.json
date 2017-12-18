@@ -64,8 +64,8 @@
 	},
 	{
 		"method": "validate",
-		"title": "Fails null",
-		"schema": {"type": "object"},
+		"title": "Fails null (required)",
+		"schema": {"type": "object","required":true},
 		"data": null,
 		"result": {
 			"/valid": false,
@@ -73,6 +73,15 @@
 			"/errors/0/dataPath": "",
 			"/errors/0/schemaPath": "/type",
 			"/errors/0/message": "Invalid type: null"
+		}
+	},
+	{
+		"method": "validate",
+		"title": "Passes null (optional)",
+		"schema": {"type": "object"},
+		"data": null,
+		"result": {
+			"/valid": true
 		}
 	}
 ]
